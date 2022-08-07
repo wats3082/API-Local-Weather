@@ -1,20 +1,37 @@
 # WEATHER APP CONNECTING TO 3RD PARTY API
 from tkinter import *
 import requests  # import requests to use
+from flask import Flask
+import datetime
+
+from bottle import route, run
+
+app = Flask(__name__)
 
 root = Tk()
-root.title("OPEN WEATHER FORECAST")
-root.geometry("500x300")
+root.title("WEATHER FORECAST")
+root.geometry("350x500")
+
 
 def ResponseWeather(weather):
     try:
-        name= weather['name']
+        name = weather['name']
         desc = weather['weather'][0]['description']
         temp = weather['main']['temp']
-        finalOutput = str(name) + " currently has " + str(desc) + " and " + str(temp) + " degrees."
+        hum = weather['main']['humidity']
+        lat = weather['coord']['lat']
+        lon = weather['coord']['lon']
+        wind = weather['wind']['speed']
+        pressure = weather['main']['pressure']
+        time = datetime.datetime.now()
+
+        finalOutput = str(name) + " \nConditions as of " + str(time) + " \nCurrently: " + str(desc) + "\n" + str(temp) + " degrees\n" + str(
+            hum) + "% humidity\n" + str(lat) + " latitude\n" + str(lon) + " longitude\n" + str(
+            pressure) + " kPa atmospheric pressure\n" + str(wind) + " m/s wind speed\n"
     except:
         finalOutput = "There was a problem with your search."
     return finalOutput
+
 
 def getWeather(city):
     # API CONNECTION is our way to communicate with server
@@ -24,7 +41,7 @@ def getWeather(city):
     response = requests.get(url, params=params)
     weather = response.json()
     label2['text'] = ResponseWeather(weather)
-    #print(ResponseWeather(weather))
+    # print(ResponseWeather(weather))
 
 
 label1 = Label(root, text="Type in city name to fetch weather.")
