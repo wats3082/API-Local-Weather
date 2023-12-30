@@ -1,5 +1,4 @@
 version: 1.0
-theme: jekyll-theme-minimal
 runtime: python3 
 build:
   commands:
