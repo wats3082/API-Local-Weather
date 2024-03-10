@@ -1,5 +1,5 @@
 
-Type in a city to find local weather conditions
+Update 3/24: Type in a city to find local weather conditions
 
 Using API OpenWeather
 
